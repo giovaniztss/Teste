@@ -1,0 +1,249 @@
+<!--
+
+
+	Trabalho feito por giovani e wesley
+	inf3at
+	//-->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Loja</title>
+        <style type="text/css">
+            img{
+                width: 150px;
+                height: 150px;
+
+            }
+            table{
+                
+                border: 1px;
+            }
+        </style>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+        </script>
+
+        <script type="text/javascript">
+           
+
+            class produto{
+            constructor(titulo,descricao,foto,preco){
+            this.titulo=titulo;
+            this.descricao=descricao;
+            this.foto=foto;
+            this.preco=preco;
+            }
+
+            }
+            class Compra{
+            constructor(produto, quantidade){
+            this.quantidade = quantidade;
+            this.produto= produto;
+            }
+
+            }
+            class Carrinho{
+            constructor(){
+            this.vet = [];
+            }
+            Adicio(item){
+                var teste=0;
+                if (this.vet.length==0){
+                    this.vet.push(item);
+
+                }
+                else if(this.vet.length!=0){
+                    for (var i=0;i<this.vet.length;i++) {
+
+                    if(this.vet[i].produto.titulo==item.produto.titulo){
+                            this.vet[i] = item;
+                            var teste =12;
+
+                    }
+
+                }
+                if(teste!=12){
+                    this.vet.push(item);
+                }
+                
+            }
+        }
+            atualizar(){
+            var total=0;
+            for (var x = 0; x < this.vet.length; x++) {
+            total += this.vet[x].quantidade * this.vet[x].produto.preco;
+
+            }
+            return total;
+            }
+            }
+
+            var aux = [];
+
+            aux[0] = new produto("Bola de Futebol Campo Adidas Starlancer VI - Vermelho e Branco" , "Entre em campo pronto para estufar as redes com a Bola de Campo Adidas Starlancer VI. Confeccionada em TPU com câmara de borracha, essa bola de futebol oferece excelente toque de bola e precisão para você marcar golaços para o seu time.", "bola.png", 49.99);
+
+            aux[1] =  new produto("Mochila Poker Sport Dakar - Preto","Com amplo compartimento interno, a Mochila Poker Sport Dakar é a escolha perfeita para te acompanhar na rotina entre o trabalho e academia. A peça conta com bolso com zíper na parte frotal e bolsos em mesh nas laterais. Aproveite os descontos da Black Friday na Netshoes e garanta já o produto por um preço especial.","mochila.png",59.99);
+            aux[2] =  new produto("Chuteira Infantil Drayzinho 19 ao 27 Society - Preto e Laranja", "Cabedal extremamente confortável e resistente. Material ecológico e com amarra em cadarços para conforto dos pequenos. Com palmilha macia, o calçado vem ainda com solado com tecnologia que aproxima da borracha.","chuteira.png", 43.54);
+            aux[3] =  new produto("Bermuda Nike HBR Masculina - Preto","Entre na quadra pronto para mostrar toda sua habilidade! A Bermuda Nike HBR Masculina garante leveza e ótimo conforto térmico, graças a tecnologia Dri-Fit, que oferece frescor e permitindo que você se movimente com total liberdade.","Bermuda.png", 69.99);
+            aux[4] =  new produto("Boné Oklahoma City Thunder 950 Draft 2 New Era - Marinho","O Boné New Era 950 9Fifty é o boné oficial da NBA 2019. Ele é cesta certa para elevar os traços urbanos de suas produções, com esportividade. Exiba sua paixão pelo Basquete em seu visual e garanta personalidade.","bone.png", 139.99);
+
+
+
+
+            $(document).ready(function(){
+
+            var y = 0;
+
+            var car1 = new Carrinho();
+            var comprar = [];
+
+            var tabela = $("<table></table>");	
+
+            for (var i = 0; i < 5; i++) {
+
+            var linha = $("<tr></tr>");
+
+            var coluna = $("<td></td>");
+            var coluna1 = $("<td></td>");
+            var coluna2 = $("<td></td>");
+            var coluna3 = $("<td></td>");
+            var coluna4 = $("<td></td>");
+
+            var input = $("<input>");
+            var imagem = $("<img>");
+            var button = $("<button id='b"+i+"'></button>").text("comprar");
+
+            $(imagem).attr("src", aux[i].foto);
+            $(input).attr("type", "text");
+            $(input).attr("id", "in"+i);
+            $(coluna).append(imagem);
+            $(coluna1).append(aux[i].titulo);
+            $(coluna2).append(aux[i].descricao);
+            $(coluna3).append("R$ "+aux[i].preco);
+            $(coluna4).append(input);
+            $(coluna4).append(button);
+
+            $(linha).append(coluna);
+            $(linha).append(coluna1);
+            $(linha).append(coluna2);
+            $(linha).append(coluna3);
+            $(linha).append(coluna4);
+
+            $(tabela).append(linha);
+
+            }
+
+            $("body").append(tabela);
+
+            
+
+            $( "#b0" ).click(function() {
+            comprar[y] = new Compra(aux[0], $("#in0").val());
+            car1.Adicio(comprar[y]);
+            car1.atualizar();
+            y+=1;
+            });
+            $( "#b1" ).click(function() {
+            comprar[y] = new Compra(aux[1],$("#in1").val());
+            car1.Adicio(comprar[y]);
+            car1.atualizar();
+            y+=1;
+
+            });
+            $( "#b2" ).click(function() {
+            comprar[y] = new Compra(aux[2], $("#in2").val());
+            car1.Adicio(comprar[y]);
+            car1.atualizar();
+            y+=1;
+
+            });
+            $( "#b3" ).click(function() {
+            comprar[y] = new Compra(aux[3], $("#in3").val());
+            car1.Adicio(comprar[y]);
+            car1.atualizar();
+            y+=1;
+
+            });
+            $( "#b4" ).click(function() {
+            comprar[y] = new Compra(aux[4],$("#in4").val());
+            car1.Adicio(comprar[y]);
+            car1.atualizar();
+            y+=1;
+            });
+
+            var botaocar1 = $("<button id='carrin'></button>").text("Ver carrinho de Compras");
+            $("body").append(botaocar1);
+
+            $("#carrin").click(function(){
+
+            var tabelacar1 = $("<table border=1 id='tabelacar1'></table>");
+
+            var titulo = $("<th></th>").text("Produto");
+            var titulo1 = $("<th></th>").text("Quantidade");
+            var titulo2 = $("<th></th>").text("Preço unitário");
+            var titulo3 = $("<th></th>").text("Subtotal");
+
+
+            $(tabelacar1).append(titulo);
+            $(tabelacar1).append(titulo1);
+            $(tabelacar1).append(titulo2);
+            $(tabelacar1).append(titulo3);
+
+            
+            for (var  z = 0; z < car1.vet.length; z++) {
+
+            var linhacar1 = $("<tr></tr>");
+
+            var colcar11 = $("<td></td>");
+            var colcar12 = $("<td></td>");
+            var colcar13 = $("<td></td>");
+            var colcar14 = $("<td></td>");
+
+            $(colcar11).append(car1.vet[z].produto.titulo);
+            $(colcar12).append(car1.vet[z].quantidade);
+            $(colcar13).append(car1.vet[z].produto.preco);
+            $(colcar14).append(car1.vet[z].quantidade *car1.vet[z].produto.preco);
+
+
+            $(linhacar1).append(colcar11);
+            $(linhacar1).append(colcar12);
+            $(linhacar1).append(colcar13);
+            $(linhacar1).append(colcar14);
+
+
+            $(tabelacar1).append(linhacar1);
+
+            }
+            $("body").append(tabelacar1);
+
+            var paragrafo = $("<p id='total'></p>").text("Total da Compra:" + car1.atualizar() + " ");
+
+                  $("body").append(paragrafo);
+
+                var apagar = $("<button id='apagar'></button>").text("Esvaziar carrinho de compras");
+                $("body").append(apagar);
+
+                $("#apagar").click(function() {
+                comprar = [];
+                car1.vet = [];
+                $("#tabelacar1 tr").empty();
+                $("#tabelacar1 th").empty();
+                $("#total").empty();
+
+                $("#tabelacar1 tr").remove();
+                $("#tabelacar1 th").remove();
+                $("#apagar").remove();
+                $("#total").remove();
+            });
+
+
+            });
+            });
+
+
+        </script>
+    </head>
+    <body>
+
+    </body>
+</html>
